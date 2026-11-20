@@ -14,10 +14,10 @@ Never request passwords, client JSON, exported tokens or standalone codes.
 Explicit callback arguments pass through model/history. Interception and message
 deletion are best effort, not an erasure guarantee. Expired callbacks are not caught.
 
-The public `google-workspace` plugin must be loaded in the same profile with the
+The public `gws-workspace` plugin must be loaded in the same profile with the
 `gws-native-account-v2` backend. It owns binary selection, process/path isolation,
 the routing block, identity checks, lifecycle locks and native local logout.
-Configure only `plugins.entries.google-workspace.settings.gws_bin`; the private
+Configure only `plugins.entries.gws-workspace.settings.gws_bin`; the private
 plugin has no binary override and never invokes interactive `hermes gws login`.
 Stop watches and finish cleanup before changing account credentials. Missing or
 incompatible companions fail closed. Pending status/cancel remain available.

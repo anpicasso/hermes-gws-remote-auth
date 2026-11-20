@@ -43,7 +43,7 @@ class NativePairTests(unittest.TestCase):
         self.binary.write_text(FAKE_GWS.replace("{python}", sys.executable))
         self.binary.chmod(0o700)
         self.config = {"plugins": {"isolation": "in_process", "entries": {
-            "google-workspace": {"settings": {"gws_bin": str(self.binary)}},
+            "gws-workspace": {"settings": {"gws_bin": str(self.binary)}},
             "gws-remote-auth": {"settings": {"gws_bin": "/must-not-be-used"}}}}}
         (self.home / "config.yaml").write_text(json.dumps(self.config))
         self.manager = PluginManager(scope_key=str(self.home))
@@ -54,7 +54,7 @@ class NativePairTests(unittest.TestCase):
             self.manager._load_plugin(manifest)
             loaded = self.manager._plugins[manifest.name]
             self.assertTrue(loaded.enabled, loaded.error)
-        self.public = self.manager._plugins["google-workspace"].module
+        self.public = self.manager._plugins["gws-workspace"].module
         self.private = self.manager._plugins["gws-remote-auth"].module
         assert self.public is not None and self.private is not None
         self.public_name = self.public.__name__
@@ -102,7 +102,7 @@ class NativePairTests(unittest.TestCase):
     def test_installed_native_gws_generates_consent_then_cancels_without_exchange(self):
         binary = shutil.which("gws")
         self.assertIsNotNone(binary, "install the native gws test prerequisite")
-        self.config["plugins"]["entries"]["google-workspace"]["settings"]["gws_bin"] = binary
+        self.config["plugins"]["entries"]["gws-workspace"]["settings"]["gws_bin"] = binary
         (self.home / "config.yaml").write_text(json.dumps(self.config))
         (self.slot / "client_secret.json").write_text(json.dumps({"installed": {
             "client_id": "synthetic.apps.googleusercontent.com", "project_id": "fixture-project",
@@ -132,7 +132,7 @@ class NativePairTests(unittest.TestCase):
                 self.assertEqual(self.call(callback_url=self.callback(started))["reason"], "companion_unavailable")
         self.assertFalse(self.backend.registered("user@example.com"))
         self.assertTrue(self.call()["ok"])
-        self.manager.unload("google-workspace")
+        self.manager.unload("gws-workspace")
         self.assertFalse(self.backend.active)
         self.assertTrue(self.call(action="cancel")["ok"])
         self.assertEqual(self.call()["reason"], "companion_unavailable")
@@ -253,7 +253,7 @@ class NativePairTests(unittest.TestCase):
         manifest = parse_manifest_file(PUBLIC / "plugin.yaml", PUBLIC, "user", "")
         assert manifest is not None
         other._load_plugin(manifest)
-        loaded = other._plugins["google-workspace"]
+        loaded = other._plugins["gws-workspace"]
         self.assertTrue(loaded.enabled, loaded.error)
         assert loaded.module is not None
         self.assertNotEqual(loaded.module.__name__, self.public.__name__)

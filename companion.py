@@ -3,7 +3,7 @@ import re
 import sys
 from pathlib import Path
 
-_NAMESPACE = re.compile(r"hermes_plugins\.google_workspace(?:__home_[0-9a-f]{12})?\Z")
+_NAMESPACE = re.compile(r"hermes_plugins\.gws_workspace(?:__home_[0-9a-f]{12})?\Z")
 
 
 def resolve_backend(root):

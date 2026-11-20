@@ -1,13 +1,13 @@
 name: gws-remote-auth
-version: 0.1.0
+version: 0.1.1
 manifest_version: 2
 kind: standalone
-description: Optional remote OAuth login and local logout for google-workspace (outside the catalog)
+description: Optional remote OAuth login and local logout for gws-workspace (outside the catalog)
 license: MIT
 requires_hermes: ">=0.23.2"
 requires_plugins:
-  - id: google-workspace
-    version_range: ">=0.9.0,<1.0.0"
+  - id: gws-workspace
+    version_range: ">=0.9.1,<1.0.0"
 provides_tools:
   - gws_login
   - gws_logout

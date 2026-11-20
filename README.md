@@ -1,18 +1,18 @@
 # gws-remote-auth (optional, outside the catalog)
 
-Only `gws_login` and `gws_logout` are registered. The public `google-workspace`
+Only `gws_login` and `gws_logout` are registered. The public [`gws-workspace`](https://github.com/anpicasso/hermes-google-workspace)
 plugin owns accounts, API execution, health checks and watches. This optional
 companion is not needed for native terminal login or public API use. Do not
 install it beside an older plugin that also registers these two tool names.
 
 ## Requirements and setup
 
-- A compatible Hermes runtime and the public `google-workspace` plugin loaded in the
+- A compatible Hermes runtime and the public `gws-workspace` plugin loaded in the
   same profile and interpreter (tested with `plugins.isolation: in_process`). The
-  manifest range `>=0.9.0,<1.0.0` is advisory: the loaded plugin must also expose
+  manifest range `>=0.9.1,<1.0.0` is advisory: the loaded plugin must also expose
   `gws-native-account-v2`. A version number alone is not enough.
 - POSIX process locks for native auth writes. Native `gws` on PATH, or configure the executable once at
-  `plugins.entries.google-workspace.settings.gws_bin`. Remove the old private
+  `plugins.entries.gws-workspace.settings.gws_bin`. Remove the old private
   override; it is ignored. The public setting is resolved per operation; a
   pending login retains the binary that launched it for identity verification.
 - Set up a Desktop OAuth client **for this account** with the public `hermes gws setup EMAIL` terminal command. Native gws may sign into gcloud, select/create a project, enable APIs, and ask you to create a Desktop client in Cloud Console and enter its ID and secret in the native terminal. It is not unattended. Existing per-account clients do not need setup. The remote companion does not run setup in chat or import a global/profile client. Never send client secrets, passwords or tokens through chat.
@@ -47,7 +47,7 @@ that all scopes were granted. Public `gws_accounts` owns granted-scope reporting
 ## Companion lifecycle contract and integration
 
 At runtime the companion resolves exactly one active `gws-native-account-v2`
-instance from Hermes's already loaded `hermes_plugins.google_workspace` namespace
+instance from Hermes's already loaded `hermes_plugins.gws_workspace` namespace
 (including profile-qualified names), matching the exact profile store. It never
 imports a checkout by path, runs the interactive `hermes gws` CLI, or falls back
 to another profile. Missing, incompatible, ambiguous or unloaded backends refuse
@@ -94,7 +94,7 @@ fresh, isolated homes. From this repository (set `TMPDIR` to a scratch directory
 ```sh
 export HOME="$(mktemp -d)" HERMES_HOME="$(mktemp -d)"
 export HERMES_AGENT_SRC=/path/to/pinned/hermes-agent PYTHONPATH=/path/to/pinned/hermes-agent
-export GWS_PUBLIC_SRC=/path/to/matching/google-workspace
+export GWS_PUBLIC_SRC=/path/to/matching/hermes-google-workspace-split
 export HERMES_DISABLE_LAZY_INSTALLS=1 PYTHONDONTWRITEBYTECODE=1
 python -m unittest discover -s tests -v
 python tests/pair_check.py --public "$GWS_PUBLIC_SRC"

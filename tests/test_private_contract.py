@@ -191,7 +191,7 @@ class RegistrationTests(unittest.TestCase):
         self.root.mkdir(mode=0o700)
         backend = backend_module.AccountBackend(self.root, lambda: self.config["gws_bin"],
             lambda args: json.loads(dispatch("gws_accounts", args)))
-        namespace = mock.patch.dict(sys.modules, {"hermes_plugins.google_workspace": SimpleNamespace(native_accounts=backend)})
+        namespace = mock.patch.dict(sys.modules, {"hermes_plugins.gws_workspace": SimpleNamespace(native_accounts=backend)})
         namespace.start()
         self.addCleanup(namespace.stop)
         fixtures.LoginTests.provision(self.root)

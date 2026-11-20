@@ -67,14 +67,14 @@ class LoginError(RuntimeError):
 
 _REASON_HINTS = {
     "unsupported_lock_backend": "managed native auth requires POSIX process locks",
-    "companion_unavailable": "enable a compatible google-workspace plugin in this profile",
+    "companion_unavailable": "enable a compatible gws-workspace plugin in this profile",
     "credentials_in_use": "stop account watches and finish cleanup before changing credentials",
     "invalid_callback": "the pasted URL is not this login's localhost callback",
     "expired": "the login deadline passed",
     "callback_rejected": "gws did not accept the local callback",
     "gws_failed": "native gws login did not complete",
     "launch_failed": "run hermes gws setup EMAIL locally for this account and check the native binary",
-    "gws_not_found": "install gws on PATH or set plugins.entries.google-workspace.settings.gws_bin",
+    "gws_not_found": "install gws on PATH or set plugins.entries.gws-workspace.settings.gws_bin",
     "account_busy": "finish or cancel the other account operation, then retry",
     "logout_required": "existing native token cache or plaintext fallback; explicitly log out before replacing it",
     "identity_unconfirmed": "gws could not read the authorized account's email (userinfo)",

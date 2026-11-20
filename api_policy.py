@@ -1,4 +1,4 @@
-"""Private logout approval only; public API policy belongs to google-workspace."""
+"""Private logout approval only; public API policy belongs to gws-workspace."""
 
 
 def make_pre_tool_call_hook():
